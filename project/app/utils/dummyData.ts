@@ -28,21 +28,21 @@ interface Category {
 export const categories: Category[] = [
   {
     id: 'cat-1',
-    name: 'Electronics',
-    image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80',
-    description: 'Latest gadgets and electronics'
+    name: "Men's Clothing",
+    image: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&q=80',
+    description: 'Stylish and comfortable clothing for men'
   },
   {
     id: 'cat-2',
-    name: 'Fashion',
-    image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80',
-    description: 'Trendy clothing and accessories'
+    name: "Women's Clothing",
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&q=80',
+    description: 'Elegant and fashionable clothing for women'
   },
   {
     id: 'cat-3',
-    name: 'Home & Living',
-    image: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?auto=format&fit=crop&q=80',
-    description: 'Home decor and essentials'
+    name: 'Accessories',
+    image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&q=80',
+    description: 'Complete your look with our accessories'
   }
 ];
 
@@ -119,51 +119,75 @@ export const generateDummyProducts = async (count: number = 10): Promise<Product
 export const dummyProducts: Product[] = [
   {
     id: 'product-1',
-    name: 'Premium Leather Bag',
-    price: 299.99,
-    description: 'Handcrafted leather bag with premium quality materials and elegant design.',
-    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80',
-    category: 'Fashion'
+    name: 'Classic Cotton T-Shirt',
+    price: 299000,
+    description: 'Comfortable and stylish cotton t-shirt for everyday wear',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80',
+    category: "Men's Clothing"
   },
   {
     id: 'product-2',
-    name: 'Wireless Headphones',
-    price: 199.99,
-    description: 'High-quality wireless headphones with noise cancellation technology.',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80',
-    category: 'Electronics'
+    name: 'Slim Fit Denim Jeans',
+    price: 599000,
+    description: 'Modern slim fit jeans with premium denim material',
+    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80',
+    category: "Men's Clothing"
   },
   {
     id: 'product-3',
-    name: 'Smart Watch',
-    price: 249.99,
-    description: 'Modern smartwatch with health tracking and notification features.',
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80',
-    category: 'Electronics'
+    name: 'Floral Summer Dress',
+    price: 450000,
+    description: 'Beautiful floral dress perfect for summer occasions',
+    image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80',
+    category: "Women's Clothing"
   },
   {
     id: 'product-4',
-    name: 'Running Shoes',
-    price: 129.99,
-    description: 'Comfortable and durable running shoes for professional athletes.',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80',
-    category: 'Sports'
+    name: 'Elegant Blouse',
+    price: 350000,
+    description: 'Sophisticated blouse for professional and casual wear',
+    image: 'https://images.unsplash.com/photo-1551489186-cf8726f514f8?auto=format&fit=crop&q=80',
+    category: "Women's Clothing"
   },
   {
     id: 'product-5',
-    name: 'Minimalist Backpack',
-    price: 89.99,
-    description: 'Stylish and practical backpack for everyday use.',
-    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80',
-    category: 'Fashion'
+    name: 'Leather Handbag',
+    price: 899000,
+    description: 'Premium leather handbag with elegant design',
+    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80',
+    category: 'Accessories'
   },
   {
     id: 'product-6',
-    name: 'Coffee Maker',
-    price: 159.99,
-    description: 'Modern coffee maker for the perfect morning brew.',
-    image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&q=80',
-    category: 'Home'
+    name: 'Classic Sunglasses',
+    price: 299000,
+    description: 'Timeless sunglasses design with UV protection',
+    image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&q=80',
+    category: 'Accessories'
+  },
+  {
+    id: 'product-7',
+    name: 'Casual Sneakers',
+    price: 799000,
+    description: 'Comfortable sneakers for everyday use',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80',
+    category: 'Footwear'
+  },
+  {
+    id: 'product-8',
+    name: 'Gold Necklace',
+    price: 1299000,
+    description: 'Elegant gold necklace with modern design',
+    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80',
+    category: 'Jewelry'
+  },
+  {
+    id: 'product-9',
+    name: 'Sports Running Shoes',
+    price: 899000,
+    description: 'High-performance running shoes for athletes',
+    image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&q=80',
+    category: 'Sports & Active Wear'
   }
 ];
 

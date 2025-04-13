@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import SessionProviderWrapper from './providers/SessionProviderWrapper';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/wishlist-context';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,14 +25,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProviderWrapper>
           <CartProvider>
-            <div className="min-h-screen flex flex-col">
-              <Header />
-              <main className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-            </div>
-            <Toaster position="top-center" />
+            <WishlistProvider>
+              <div className="min-h-screen flex flex-col">
+                <Header />
+                <main className="flex-grow">
+                  {children}
+                </main>
+                <Footer />
+              </div>
+              <Toaster position="top-center" />
+            </WishlistProvider>
           </CartProvider>
         </SessionProviderWrapper>
       </body>

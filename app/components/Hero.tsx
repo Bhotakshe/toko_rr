@@ -1,9 +1,18 @@
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { heroData } from '@/app/utils/dummyData';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
+  const router = useRouter();
+
+  const handleShopNow = () => {
+    router.push('/products');
+  };
+
   return (
     <div className="relative h-[600px] bg-gray-900 text-white">
       <div className="absolute inset-0">
@@ -23,9 +32,14 @@ const Hero = () => {
         >
           <h1 className="text-5xl font-bold mb-6">{heroData.title}</h1>
           <p className="text-xl mb-8">{heroData.description}</p>
-          <button className="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <motion.button 
+            onClick={handleShopNow}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+          >
             Shop Now
-          </button>
+          </motion.button>
         </motion.div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { useAuth } from '@/app/providers/AuthProvider';
 export default function Header() {
   const { data: session } = useSession();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { totalItems } = useCart();
   const pathname = usePathname();
@@ -28,6 +29,12 @@ export default function Header() {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    // Navigate to products page with search query
+    router.push(`/products?search=${encodeURIComponent(e.target.value)}`);
   };
 
   const navLinks = [
@@ -177,7 +184,9 @@ export default function Header() {
             <div className="max-w-3xl mx-auto px-4">
               <input
                 type="search"
-                placeholder="Search products..."
+                placeholder="Cari produk..."
+                value={searchQuery}
+                onChange={handleSearch}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 autoFocus
               />

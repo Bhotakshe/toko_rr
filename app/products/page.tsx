@@ -36,10 +36,19 @@ export default function ProductsPage() {
   const searchQuery = searchParams.get('search') || '';
 
   useEffect(() => {
-    setTimeout(() => {
-      setProducts(dummyProducts);
+    // Try to load products from localStorage first
+    const savedProducts = localStorage.getItem('products');
+    if (savedProducts) {
+      setProducts(JSON.parse(savedProducts));
       setLoading(false);
-    }, 1000);
+    } else {
+      // If no saved products, load from dummy data and save to localStorage
+      setTimeout(() => {
+        setProducts(dummyProducts);
+        localStorage.setItem('products', JSON.stringify(dummyProducts));
+        setLoading(false);
+      }, 1000);
+    }
   }, []);
 
   const filteredProducts = products.filter(product => {

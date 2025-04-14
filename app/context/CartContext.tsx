@@ -35,9 +35,10 @@ export function useCart() {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  // Inisialisasi dengan array kosong terlebih dahulu
   const [items, setItems] = useState<CartItem[]>([]);
-
-  // Load cart from localStorage on mount
+  
+  // Gunakan useEffect untuk memuat data dari localStorage setelah komponen dimount
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
@@ -45,9 +46,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // Simpan ke localStorage setiap kali items berubah
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(items));
+    if (items.length > 0) {
+      localStorage.setItem('cart', JSON.stringify(items));
+    } else {
+      localStorage.removeItem('cart'); // Hapus dari localStorage jika cart kosong
+    }
   }, [items]);
 
   const addToCart = async (product: Omit<CartItem, 'quantity'>) => {
@@ -61,16 +66,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             : item
         );
       }
-
+      
       return [...currentItems, { ...product, quantity: 1 }];
     });
 
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
   };
 
   const removeFromCart = (productId: string) => {
-    setItems(currentItems => currentItems.filter(item => item.id !== productId));
+    setItems(currentItems => 
+      currentItems.filter(item => item.id !== productId)
+    );
   };
 
   const updateQuantity = (productId: string, quantity: number) => {

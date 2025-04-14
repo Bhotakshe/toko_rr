@@ -7,7 +7,6 @@ import { useCart } from '@/app/context/CartContext';
 import { toast } from 'react-hot-toast';
 import Image from 'next/image';
 import Link from 'next/link';
-import LikeButton from '@/app/components/like-button';
 import { useSearchParams } from 'next/navigation';
 
 interface Product {
@@ -108,7 +107,7 @@ export default function ProductsPage() {
               return (
                 <div 
                   key={product.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
                   <Link href={`/products/${product.id}`}>
                     <motion.div
@@ -171,9 +170,6 @@ export default function ProductsPage() {
                       </div>
                     </motion.div>
                   </Link>
-                  <div className="absolute top-2 right-2">
-                    <LikeButton product={product} />
-                  </div>
                 </div>
               );
             })

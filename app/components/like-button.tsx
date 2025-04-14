@@ -1,35 +1,27 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
-import { useWishlist } from '@/app/context/wishlist-context';
+import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
+import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 
 interface LikeButtonProps {
   product: {
     id: string;
     name: string;
-    price: number;
-    image: string;
-    description: string;
   };
-  className?: string;
 }
 
-export default function LikeButton({ product, className = '' }: LikeButtonProps) {
-  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
-  const isLiked = isInWishlist(product.id);
+export default function LikeButton({ product }: LikeButtonProps) {
+  const [isLiked, setIsLiked] = useState(false);
 
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation if button is inside a Link
-    
-    if (isLiked) {
-      removeFromWishlist(product.id);
-      toast.success('Dihapus dari wishlist');
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    if (!isLiked) {
+      toast.success('Ditambahkan ke favorit');
     } else {
-      addToWishlist(product);
-      toast.success('Ditambahkan ke wishlist');
+      toast.success('Dihapus dari favorit');
     }
   };
 
@@ -37,13 +29,13 @@ export default function LikeButton({ product, className = '' }: LikeButtonProps)
     <motion.button
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      onClick={handleLikeClick}
-      className={`p-2 rounded-full hover:bg-gray-100 transition-colors ${className}`}
+      onClick={handleLike}
+      className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-white/90 transition-colors"
     >
       {isLiked ? (
-        <HeartSolidIcon className="h-6 w-6 text-red-500" />
+        <HeartIconSolid className="h-5 w-5 text-red-500" />
       ) : (
-        <HeartIcon className="h-6 w-6 text-gray-600" />
+        <HeartIcon className="h-5 w-5 text-gray-600" />
       )}
     </motion.button>
   );

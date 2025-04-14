@@ -4,10 +4,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShoppingBagIcon, UserIcon, HeartIcon, MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/app/context/CartContext';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/app/providers/AuthProvider';
 
 export default function Header() {
   const { data: session } = useSession();
@@ -17,7 +16,6 @@ export default function Header() {
   const { totalItems } = useCart();
   const pathname = usePathname();
   const router = useRouter();
-  const { user, isAuthenticated, signOut } = useAuth();
 
   const isActivePath = (path: string) => {
     if (path === '/' && pathname !== '/') return false;
@@ -33,7 +31,6 @@ export default function Header() {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-    // Navigate to products page with search query
     router.push(`/products?search=${encodeURIComponent(e.target.value)}`);
   };
 
@@ -105,11 +102,11 @@ export default function Header() {
               )}
             </Link>
 
-            {isAuthenticated ? (
+            {session ? (
               <div className="relative group">
                 <button className="p-2 flex items-center space-x-1 sm:space-x-2">
                   <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />
-                  <span className="hidden sm:inline text-sm text-gray-600">{user?.name}</span>
+                  <span className="hidden sm:inline text-sm text-gray-600">{session.user?.name}</span>
                 </button>
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
                   <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

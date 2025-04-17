@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ShoppingBagIcon, UserIcon, HeartIcon, MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { ShoppingBagIcon, UserIcon, MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useSession, signOut } from 'next-auth/react';
 import { useCart } from '@/app/context/CartContext';
 import { usePathname, useRouter } from 'next/navigation';
@@ -84,10 +84,6 @@ export default function Header() {
             >
               <MagnifyingGlassIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />
             </motion.button>
-
-            <Link href="/wishlist" className="p-2">
-              <HeartIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />
-            </Link>
 
             <Link href="/cart" className="p-2 relative">
               <ShoppingBagIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />

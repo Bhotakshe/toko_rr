@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { UserIcon, CogIcon, ShoppingBagIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { UserIcon, CogIcon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 
 export default function AccountPage() {
   const { data: session } = useSession();
@@ -19,7 +19,6 @@ export default function AccountPage() {
   const tabs = [
     { id: 'profile', name: 'Profil Saya', icon: UserIcon },
     { id: 'orders', name: 'Pesanan Saya', icon: ShoppingBagIcon },
-    { id: 'wishlist', name: 'Wishlist', icon: HeartIcon },
     { id: 'settings', name: 'Pengaturan', icon: CogIcon },
   ];
 
@@ -119,15 +118,6 @@ export default function AccountPage() {
                   <h2 className="text-2xl font-bold text-gray-900">Pesanan Saya</h2>
                   <div className="mt-6">
                     <p className="text-gray-500">Belum ada pesanan</p>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'wishlist' && (
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Wishlist</h2>
-                  <div className="mt-6">
-                    <p className="text-gray-500">Wishlist Anda kosong</p>
                   </div>
                 </div>
               )}

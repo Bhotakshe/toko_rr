@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/app/providers/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 export default function SignIn() {
@@ -13,22 +14,51 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signIn: authSignIn } = useAuth();
+  const { data: session, status } = useSession();
+
+  // Redirect jika sudah login
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/account');
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await signIn(email, password);
+      await authSignIn(email, password);
       toast.success('Login berhasil!');
-      router.push('/');
+      router.push('/account');
     } catch (error) {
       toast.error('Email atau password salah');
     } finally {
       setIsLoading(false);
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signIn('google', { 
+        callbackUrl: '/account',
+        redirect: true 
+      });
+    } catch (error) {
+      toast.error('Gagal login dengan Google');
+      setIsLoading(false);
+    }
+  };
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex bg-[#f0f3f7]">
@@ -71,7 +101,7 @@ export default function SignIn() {
           <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="sr-only">
-                Nomor HP atau Email
+                Email
               </label>
               <input
                 id="email"
@@ -82,7 +112,7 @@ export default function SignIn() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-[#03ac0e] focus:border-[#03ac0e] sm:text-sm"
-                placeholder="Nomor HP atau Email"
+                placeholder="Email"
               />
             </div>
 
@@ -104,7 +134,7 @@ export default function SignIn() {
                   Memproses...
                 </span>
               ) : (
-                'Selanjutnya'
+                'Masuk'
               )}
             </motion.button>
 
@@ -121,10 +151,18 @@ export default function SignIn() {
               <div className="mt-4 grid gap-2">
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                  onClick={handleGoogleSignIn}
+                  disabled={isLoading}
+                  className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span className="mr-2">🔍</span>
-                  Google
+                  <Image
+                    src="/google.svg"
+                    alt="Google"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                  />
+                  {isLoading ? 'Memproses...' : 'Google'}
                 </button>
               </div>
             </div>

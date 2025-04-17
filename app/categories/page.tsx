@@ -58,8 +58,9 @@ const categories = [
 export default function CategoriesPage() {
   const router = useRouter();
 
-  const handleBrowse = (categorySlug: string) => {
-    router.push(`/products/${categorySlug}`);
+  const handleBrowse = (categoryName: string) => {
+    // Mengarahkan ke Google dengan query pencarian berdasarkan kategori
+    window.open(`https://www.google.com/search?q=${encodeURIComponent(categoryName)}`, '_blank');
   };
 
   return (
@@ -92,7 +93,7 @@ export default function CategoriesPage() {
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">{category.itemCount} items</span>
                   <button 
-                    onClick={() => handleBrowse(category.slug)}
+                    onClick={() => handleBrowse(category.name)}
                     className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors"
                   >
                     Browse

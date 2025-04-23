@@ -24,7 +24,7 @@ const users = [
   }
 ];
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -81,8 +81,8 @@ const handler = NextAuth({
     })
   ],
   pages: {
-    signIn: '/auth/signin',
-    error: '/auth/signin',
+    signIn: '/(auth)/signin',
+    error: '/(auth)/signin',
   },
   callbacks: {
     async signIn({ account, profile }) {
@@ -115,6 +115,8 @@ const handler = NextAuth({
   session: {
     strategy: "jwt",
   },
-});
+} as const;
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }; 

@@ -142,7 +142,7 @@ export default function Header() {
                 </div>
               </div>
             ) : (
-              <Link href="/auth/signin" className="p-2">
+              <Link href="/signin" className="p-2">
                 <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />
               </Link>
             )}

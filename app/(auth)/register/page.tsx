@@ -87,7 +87,7 @@ export default function Register() {
             <p className="mt-2 text-center text-sm text-gray-600">
               Sudah punya akun Toko RR?{' '}
               <Link 
-                href="/auth/signin" 
+                href="/signin" 
                 className="font-medium text-[#03ac0e] hover:text-[#038e0b]"
               >
                 Masuk

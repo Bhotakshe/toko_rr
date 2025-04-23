@@ -62,7 +62,7 @@ export default function AccountPage() {
   // Use useEffect for redirection to avoid rendering issues
   useEffect(() => {
     if (!session) {
-      router.push('/auth/signin');
+      router.push('/signin');
     }
   }, [session, router]);
 

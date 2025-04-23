@@ -97,7 +97,7 @@ export default function SignIn() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               <Link 
-                href="/auth/register" 
+                href="/register" 
                 className="font-medium text-[#03ac0e] hover:text-[#038e0b]"
               >
                 Daftar

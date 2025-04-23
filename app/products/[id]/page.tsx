@@ -33,9 +33,10 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
   const handleAddToCart = () => {
     addToCart({
-      ...product,
-      size: selectedSize,
-      quantity: quantity,
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image
     });
     toast.success('Produk ditambahkan ke keranjang!');
   };

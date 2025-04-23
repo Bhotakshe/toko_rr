@@ -1,6 +1,7 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions, Account, Profile } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { JWT } from 'next-auth/jwt';
 
 // Extend the built-in session types
 declare module "next-auth" {
@@ -24,7 +25,7 @@ const users = [
   }
 ];
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -81,31 +82,31 @@ export const authOptions = {
     })
   ],
   pages: {
-    signIn: '/(auth)/signin',
-    error: '/(auth)/signin',
+    signIn: '/signin',
+    error: '/signin',
   },
   callbacks: {
-    async signIn({ account, profile }) {
+    async signIn({ account, profile }: { account: Account | null; profile?: Profile }) {
       if (account?.provider === "google") {
         // Hanya izinkan email Gmail
         return profile?.email?.endsWith("@gmail.com") || false;
       }
       return true;
     },
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account, profile }: { token: JWT; account: Account | null; profile?: Profile }) {
       if (account) {
         token.accessToken = account.access_token;
         token.id = profile?.sub;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: JWT }) {
       if (session?.user) {
         session.user.id = token.id as string;
       }
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       // Redirect ke halaman profil setelah login
       if (url.startsWith("/")) return `${baseUrl}/account`;
       else if (new URL(url).origin === baseUrl) return url;
@@ -115,7 +116,7 @@ export const authOptions = {
   session: {
     strategy: "jwt",
   },
-} as const;
+};
 
 const handler = NextAuth(authOptions);
 

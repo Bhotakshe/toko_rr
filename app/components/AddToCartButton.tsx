@@ -24,8 +24,7 @@ export default function AddToCartButton({ productId, productName, price, image }
         id: productId,
         name: productName,
         price,
-        image,
-        quantity: 1
+        image
       });
     } catch (error) {
       console.error('Failed to add to cart:', error);

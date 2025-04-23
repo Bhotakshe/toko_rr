@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useAuth } from '@/app/providers/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -14,7 +13,6 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { signIn: authSignIn } = useAuth();
   const { data: session, status } = useSession();
 
   // Redirect jika sudah login
@@ -29,9 +27,18 @@ export default function SignIn() {
     setIsLoading(true);
 
     try {
-      await authSignIn(email, password);
-      toast.success('Login berhasil!');
-      router.push('/account');
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success('Login berhasil!');
+        router.push('/account');
+      }
     } catch (error) {
       toast.error('Email atau password salah');
     } finally {
@@ -115,6 +122,23 @@ export default function SignIn() {
                 placeholder="Email"
               />
             </div>
+            
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-[#03ac0e] focus:border-[#03ac0e] sm:text-sm"
+                placeholder="Password"
+              />
+            </div>
 
             <motion.button
               whileHover={{ scale: 1.01 }}
@@ -122,7 +146,7 @@ export default function SignIn() {
               type="submit"
               disabled={isLoading}
               className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
-                isLoading || !email ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#03ac0e] hover:bg-[#038e0b]'
+                isLoading || !email || !password ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#03ac0e] hover:bg-[#038e0b]'
               } transition-colors duration-200`}
             >
               {isLoading ? (

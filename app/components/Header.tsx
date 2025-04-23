@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShoppingBagIcon, UserIcon, MagnifyingGlassIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -16,6 +16,7 @@ export default function Header() {
   const { totalItems } = useCart();
   const pathname = usePathname();
   const router = useRouter();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const isActivePath = (path: string) => {
     if (path === '/' && pathname !== '/') return false;
@@ -40,6 +41,20 @@ export default function Header() {
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isUserMenuOpen && !target.closest('.user-menu')) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isUserMenuOpen]);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -99,20 +114,30 @@ export default function Header() {
             </Link>
 
             {session ? (
-              <div className="relative group">
-                <button className="p-2 flex items-center space-x-1 sm:space-x-2">
+              <div className="relative user-menu">
+                <button 
+                  className="p-2 flex items-center space-x-1 sm:space-x-2"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                >
                   <UserIcon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 hover:text-primary transition-colors" />
                   <span className="hidden sm:inline text-sm text-gray-600">{session.user?.name}</span>
                 </button>
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
-                  <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                    My Account
+                <div className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ${isUserMenuOpen ? 'block' : 'hidden'}`}>
+                  <Link 
+                    href="/account" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsUserMenuOpen(false)}
+                  >
+                    Profil Saya
                   </Link>
                   <button
-                    onClick={() => signOut()}
+                    onClick={() => {
+                      setIsUserMenuOpen(false);
+                      signOut();
+                    }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
-                    Sign Out
+                    Keluar
                   </button>
                 </div>
               </div>

@@ -80,6 +80,7 @@ export default function AccountPage() {
       [name]: value
     }));
   };
+  
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

@@ -59,18 +59,20 @@ export default function Register() {
   return (
     <div className="min-h-screen flex bg-[#f0f3f7]">
       {/* Left side - Illustration */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#f0f3f7] items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80"
-            alt="Shopping Background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        </div>
-        <div className="relative z-10 text-center text-white p-8">
-          <h1 className="text-4xl font-bold mb-4">Selamat Datang di Toko RR</h1>
-          <p className="text-xl">Bergabunglah dengan kami dan nikmati pengalaman berbelanja yang menyenangkan</p>
+      <div className="hidden lg:flex lg:w-1/2 bg-[#f0f3f7] items-center justify-center relative">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-96 h-96 relative">
+            <div className="absolute w-16 h-16 bg-green-500 rounded-lg animate-float top-0 right-0">
+              <div className="flex items-center justify-center h-full">
+                <span className="text-white text-4xl">🛍️</span>
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+              <div className="w-32 h-32 bg-white rounded-lg shadow-lg flex items-center justify-center">
+                <span className="text-6xl">🏪</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
